@@ -16,11 +16,13 @@ const connectDB = async () => {
 
         database = client.db('course_master');
         usersCollection = database.collection('users');
-        
+        coursesCollection = database.collection('courses')
 
 
 
 
+        // Admin Collections
+        adminCollection = database.collection("admins");
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -29,11 +31,11 @@ const connectDB = async () => {
 }
 
 const getCollections = () => {
-    if (!usersCollection ) {
+    if (!usersCollection || !coursesCollection || !adminCollection) {
         throw new Error('userCollection not initialized. Call connectDB() first')
     }
     return {
-        usersCollection
+        usersCollection, adminCollection, coursesCollection
     };
 }
 
